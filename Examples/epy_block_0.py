@@ -15,6 +15,7 @@ from gnuradio import gr
 
 import packet
 
+
 class blk(gr.sync_block):  # other base classes are basic_block, decim_block, interp_block
     """
     Converts an array of bytes into a AX25Packet object.
@@ -41,7 +42,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
             self.message_port_pub(pmt.intern('ax25 out'), pmt.cons(pmt.make_dict(), pmt.pmt_to_python.numpy_to_uvector(np.array([ord(c) for c in (packet.dump(pkt) + '\n')], np.uint8))))
                 
         except ValueError as e:
-            print e
+            print(e)
 
     def stop(self):
         gr.sync_block.stop(self)
@@ -50,6 +51,3 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
         in0 = input_items[0]
         # <+signal processing here+>
         return len(input_items[0])
-        
-        
-        
