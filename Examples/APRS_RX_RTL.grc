@@ -93,7 +93,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '58'
+    value: '0'
   states:
     bus_sink: false
     bus_source: false
@@ -101,11 +101,23 @@ blocks:
     coordinate: [376, 7]
     rotation: 0
     state: enabled
+- name: deviation
+  id: variable
+  parameters:
+    comment: ''
+    value: '5000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [776, 300.0]
+    rotation: 0
+    state: disabled
 - name: freq
   id: variable
   parameters:
     comment: ''
-    value: 144.39e6 - samp_rate/4
+    value: 144.800e6 - samp_rate/4
   states:
     bus_sink: false
     bus_source: false
@@ -212,9 +224,28 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [976, 140.0]
+    coordinate: [1160, 92.0]
     rotation: 0
     state: enabled
+- name: analog_nbfm_rx_0
+  id: analog_nbfm_rx
+  parameters:
+    affinity: ''
+    alias: ''
+    audio_rate: '48000'
+    comment: ''
+    max_dev: 5e3
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    quad_rate: int(samp_rate)
+    tau: 75e-6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 724.0]
+    rotation: 0
+    state: disabled
 - name: analog_quadrature_demod_cf_0
   id: analog_quadrature_demod_cf
   parameters:
@@ -228,9 +259,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 100.0]
+    coordinate: [640, 108.0]
     rotation: 0
     state: enabled
+- name: analog_quadrature_demod_cf_0_0
+  id: analog_quadrature_demod_cf
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gain: (2*math.pi*deviation)/ch_rate
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 252.0]
+    rotation: 0
+    state: disabled
 - name: audio_sink_0
   id: audio_sink
   parameters:
@@ -245,9 +292,26 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [992, 316.0]
+    coordinate: [1056, 340.0]
     rotation: 0
     state: enabled
+- name: audio_sink_0_0
+  id: audio_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    device_name: ''
+    num_inputs: '1'
+    ok_to_block: 'False'
+    samp_rate: '48000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1072, 764.0]
+    rotation: 0
+    state: disabled
 - name: blocks_message_debug_0
   id: blocks_message_debug
   parameters:
@@ -258,7 +322,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1512, 344.0]
+    coordinate: [1616, 352.0]
     rotation: 0
     state: enabled
 - name: blocks_rotator_cc_0
@@ -274,7 +338,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 196.0]
+    coordinate: [360, 100.0]
     rotation: 0
     state: enabled
 - name: blocks_socket_pdu_0
@@ -294,7 +358,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1568, 124.0]
+    coordinate: [1744, 76.0]
     rotation: 0
     state: enabled
 - name: epy_block_0_0
@@ -335,7 +399,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1304, 152.0]
+    coordinate: [1456, 104.0]
     rotation: 0
     state: enabled
 - name: fft_filter_xxx_1
@@ -355,7 +419,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [712, 164.0]
+    coordinate: [872, 84.0]
     rotation: 0
     state: enabled
 - name: import_0
@@ -610,7 +674,7 @@ blocks:
     gain7: '10'
     gain8: '10'
     gain9: '10'
-    gain_mode0: 'False'
+    gain_mode0: 'True'
     gain_mode1: 'False'
     gain_mode10: 'False'
     gain_mode11: 'False'
@@ -728,7 +792,7 @@ blocks:
     coordinate: [80, 116.0]
     rotation: 0
     state: enabled
-- name: pfb_decimator_ccf_2
+- name: pfb_decimator_ccf_0
   id: pfb_decimator_ccf
   parameters:
     affinity: ''
@@ -736,7 +800,7 @@ blocks:
     atten: '100'
     channel: '0'
     comment: ''
-    decim: int(samp_rate / bb_rate)
+    decim: int(samp_rate/bb_rate)
     fft_filts: 'True'
     fft_rot: 'True'
     maxoutbuf: '0'
@@ -747,9 +811,31 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 460.0]
+    coordinate: [432, 468.0]
     rotation: 0
     state: enabled
+- name: pfb_decimator_ccf_1
+  id: pfb_decimator_ccf
+  parameters:
+    affinity: ''
+    alias: ''
+    atten: '100'
+    channel: '0'
+    comment: ''
+    decim: int(samp_rate/ch_rate)
+    fft_filts: 'True'
+    fft_rot: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_delay: '0'
+    taps: ()
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 212.0]
+    rotation: 0
+    state: true
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -827,7 +913,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 576.0]
+    coordinate: [736, 584.0]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0_0
@@ -907,7 +993,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1168, 480.0]
+    coordinate: [1328, 504.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -1004,7 +1090,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1192, 356.0]
+    coordinate: [1344, 364.0]
     rotation: 0
     state: enabled
 - name: qtgui_waterfall_sink_x_0
@@ -1065,7 +1151,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 408.0]
+    coordinate: [736, 416.0]
     rotation: 0
     state: enabled
 - name: rational_resampler_xxx_0
@@ -1085,7 +1171,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 460.0]
+    coordinate: [1072, 476.0]
     rotation: 0
     state: disabled
 
@@ -1093,17 +1179,21 @@ connections:
 - [APRS_Rx_0, '0', qtgui_time_sink_x_0, '0']
 - [APRS_Rx_0, HDLC, blocks_message_debug_0, print_pdu]
 - [APRS_Rx_0, HDLC, epy_block_0_0, hdlc in]
+- [analog_nbfm_rx_0, '0', audio_sink_0_0, '0']
+- [analog_quadrature_demod_cf_0, '0', audio_sink_0_0, '0']
 - [analog_quadrature_demod_cf_0, '0', fft_filter_xxx_1, '0']
-- [blocks_rotator_cc_0, '0', analog_quadrature_demod_cf_0, '0']
-- [blocks_rotator_cc_0, '0', pfb_decimator_ccf_2, '0']
+- [analog_quadrature_demod_cf_0_0, '0', fft_filter_xxx_1, '0']
+- [blocks_rotator_cc_0, '0', pfb_decimator_ccf_0, '0']
+- [blocks_rotator_cc_0, '0', pfb_decimator_ccf_1, '0']
 - [epy_block_0_0, ax25 out, blocks_socket_pdu_0, pdus]
 - [fft_filter_xxx_1, '0', APRS_Rx_0, '0']
 - [fft_filter_xxx_1, '0', audio_sink_0, '0']
 - [fft_filter_xxx_1, '0', qtgui_freq_sink_x_0_0, '0']
 - [fft_filter_xxx_1, '0', rational_resampler_xxx_0, '0']
 - [osmosdr_source_0, '0', blocks_rotator_cc_0, '0']
-- [pfb_decimator_ccf_2, '0', qtgui_freq_sink_x_0, '0']
-- [pfb_decimator_ccf_2, '0', qtgui_waterfall_sink_x_0, '0']
+- [pfb_decimator_ccf_0, '0', qtgui_freq_sink_x_0, '0']
+- [pfb_decimator_ccf_0, '0', qtgui_waterfall_sink_x_0, '0']
+- [pfb_decimator_ccf_1, '0', analog_quadrature_demod_cf_0, '0']
 - [rational_resampler_xxx_0, '0', qtgui_freq_sink_x_0_0, '0']
 
 metadata:

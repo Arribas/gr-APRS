@@ -8,7 +8,7 @@
 # Title: APRS - With Sound Card Input
 # Author: Handiko
 # Description: www.github.com/handiko/gr-APRS
-# GNU Radio version: 3.8.5.0-rc1
+# GNU Radio version: 3.8.3.1
 
 from distutils.version import StrictVersion
 

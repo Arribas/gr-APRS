@@ -8,7 +8,7 @@
 # Title: APRS - WAV
 # Author: Handiko
 # Description: www.github.com/handiko/gr-APRS
-# GNU Radio version: 3.8.5.0-rc1
+# GNU Radio version: 3.8.3.1
 
 from distutils.version import StrictVersion
 
@@ -306,7 +306,7 @@ class APRS_WAV(gr.top_block, Qt.QWidget):
         self.fft_filter_xxx_0 = filter.fft_filter_fff(1, firdes.band_pass(1,samp_rate,1e3,2.6e3,100,firdes.WIN_BLACKMAN), 1)
         self.fft_filter_xxx_0.declare_sample_delay(0)
         self.epy_block_0 = epy_block_0.blk()
-        self.blocks_wavfile_source_0 = blocks.wavfile_source('/home/javier/sdr/gr-APRS/WAV/aprs.wav', True)
+        self.blocks_wavfile_source_0 = blocks.wavfile_source('/home/hamsdr/sdr/gr-aprs/WAV/aprs.wav', True)
         self.blocks_socket_pdu_0 = blocks.socket_pdu('TCP_SERVER', '', '52001', 10000, False)
         self.blocks_message_debug_1 = blocks.message_debug()
         self.audio_sink_0 = audio.sink(int(samp_rate), '', True)

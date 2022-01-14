@@ -8,7 +8,7 @@
 # Title: APRS - With RTL-SDR dongle
 # Author: Handiko
 # Description: www.github.com/handiko/gr-APRS
-# GNU Radio version: 3.8.5.0-rc1
+# GNU Radio version: 3.8.3.1
 
 from distutils.version import StrictVersion
 
@@ -91,8 +91,8 @@ class APRS_RX_RTL(gr.top_block, Qt.QWidget):
         self.mu = mu = 0.5
         self.mark = mark = 1200
         self.gmu = gmu = 0.175
-        self.freq = freq = 144.39e6 - samp_rate/4
-        self.dev_ppm = dev_ppm = 58
+        self.freq = freq = 144.800e6 - samp_rate/4
+        self.dev_ppm = dev_ppm = 0
         self.ch_rate = ch_rate = 48e3
         self.bb_rate = bb_rate = 192e3
         self.baud = baud = 1200
@@ -289,14 +289,22 @@ class APRS_RX_RTL(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self.pfb_decimator_ccf_2 = pfb.decimator_ccf(
-            int(samp_rate / bb_rate),
+        self.pfb_decimator_ccf_1 = pfb.decimator_ccf(
+            int(samp_rate/ch_rate),
             (),
             0,
             100,
             True,
             True)
-        self.pfb_decimator_ccf_2.declare_sample_delay(0)
+        self.pfb_decimator_ccf_1.declare_sample_delay(0)
+        self.pfb_decimator_ccf_0 = pfb.decimator_ccf(
+            int(samp_rate/bb_rate),
+            (),
+            0,
+            100,
+            True,
+            True)
+        self.pfb_decimator_ccf_0.declare_sample_delay(0)
         self.osmosdr_source_0 = osmosdr.source(
             args="numchan=" + str(1) + " " + ''
         )
@@ -306,7 +314,7 @@ class APRS_RX_RTL(gr.top_block, Qt.QWidget):
         self.osmosdr_source_0.set_freq_corr(dev_ppm, 0)
         self.osmosdr_source_0.set_dc_offset_mode(0, 0)
         self.osmosdr_source_0.set_iq_balance_mode(0, 0)
-        self.osmosdr_source_0.set_gain_mode(False, 0)
+        self.osmosdr_source_0.set_gain_mode(True, 0)
         self.osmosdr_source_0.set_gain(rfgain, 0)
         self.osmosdr_source_0.set_if_gain(20, 0)
         self.osmosdr_source_0.set_bb_gain(20, 0)
@@ -345,14 +353,15 @@ class APRS_RX_RTL(gr.top_block, Qt.QWidget):
         self.msg_connect((self.epy_block_0_0, 'ax25 out'), (self.blocks_socket_pdu_0, 'pdus'))
         self.connect((self.APRS_Rx_0, 0), (self.qtgui_time_sink_x_0, 0))
         self.connect((self.analog_quadrature_demod_cf_0, 0), (self.fft_filter_xxx_1, 0))
-        self.connect((self.blocks_rotator_cc_0, 0), (self.analog_quadrature_demod_cf_0, 0))
-        self.connect((self.blocks_rotator_cc_0, 0), (self.pfb_decimator_ccf_2, 0))
+        self.connect((self.blocks_rotator_cc_0, 0), (self.pfb_decimator_ccf_0, 0))
+        self.connect((self.blocks_rotator_cc_0, 0), (self.pfb_decimator_ccf_1, 0))
         self.connect((self.fft_filter_xxx_1, 0), (self.APRS_Rx_0, 0))
         self.connect((self.fft_filter_xxx_1, 0), (self.audio_sink_0, 0))
         self.connect((self.fft_filter_xxx_1, 0), (self.qtgui_freq_sink_x_0_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.blocks_rotator_cc_0, 0))
-        self.connect((self.pfb_decimator_ccf_2, 0), (self.qtgui_freq_sink_x_0, 0))
-        self.connect((self.pfb_decimator_ccf_2, 0), (self.qtgui_waterfall_sink_x_0, 0))
+        self.connect((self.pfb_decimator_ccf_0, 0), (self.qtgui_freq_sink_x_0, 0))
+        self.connect((self.pfb_decimator_ccf_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
+        self.connect((self.pfb_decimator_ccf_1, 0), (self.analog_quadrature_demod_cf_0, 0))
 
 
     def closeEvent(self, event):
@@ -365,7 +374,7 @@ class APRS_RX_RTL(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.set_freq(144.39e6 - self.samp_rate/4)
+        self.set_freq(144.800e6 - self.samp_rate/4)
         self.osmosdr_source_0.set_sample_rate(self.samp_rate)
 
     def get_space(self):

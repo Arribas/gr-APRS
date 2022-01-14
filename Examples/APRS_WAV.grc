@@ -185,7 +185,7 @@ blocks:
       sample rate : 24 kHz
 
       bit depth : 16 bits'
-    file: /home/javier/sdr/gr-APRS/WAV/aprs.wav
+    file: /home/hamsdr/sdr/gr-aprs/WAV/aprs.wav
     maxoutbuf: '0'
     minoutbuf: '0'
     nchan: '1'
